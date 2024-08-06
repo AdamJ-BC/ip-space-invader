@@ -170,6 +170,38 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        /* Login Form Styling */
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-container input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .login-container input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .login-container button {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -182,7 +214,16 @@
             <path d="M0,128L30,122.7C60,117,120,107,180,117.3C240,128,300,160,360,186.7C420,213,480,235,540,213.3C600,192,660,128,720,117.3C780,107,840,139,900,186.7C960,235,1020,288,1080,282.7C1140,277,1200,203,1260,192C1320,181,1380,235,1410,261.3L1440,288L0,288Z" class="wave2"></path>
         </svg>
     </div>
-    <div class="container">
+    
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <h1>Login</h1>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+    </div>
+    
+    <div class="container" id="mainContainer" style="display:none;">
         <!-- Logo Section -->
         <div class="logo">
             <img src="https://media.licdn.com/dms/image/C561BAQEi6CPsj7feBg/company-background_10000/0/1629297574832/biocatch_cover?e=2147483647&v=beta&t=TQIt8xHnlVIejJfOb4ALTjyow-ivgxuhHOGP42pJMMk" alt="Site Logo">
@@ -203,6 +244,28 @@
     </footer>
 
     <script>
+        const encryptedUsername = 'YWRtaW4='; // Encrypted username (admin)
+        const encryptedPassword = 'YWRtaW4='; // Encrypted password (admin)
+
+        function decrypt(text) {
+            return atob(text); // Base64 decryption
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const decryptedUsername = decrypt(encryptedUsername);
+            const decryptedPassword = decrypt(encryptedPassword);
+
+            if (username === decryptedUsername && password === decryptedPassword) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
         function processIPs() {
             const inputText = document.getElementById('ipInput').value;
 
